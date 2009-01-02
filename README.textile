@@ -1,0 +1,14 @@
+Usage:
+
+* Posting to GitHub:
+
+  $ cat file|gist.sh
+
+or
+
+  $ gist.sh  < file·
+
+
+* Getting from GitHub:
+
+  $ gist.sh 1234
