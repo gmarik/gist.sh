@@ -1,25 +1,26 @@
-Usage:
+h2. Installation 
 
-* Getting gist.sh:
-
-
+<pre>
   $ curl http://github.com/gmarik/gist.sh/raw/master/gist.sh > gist.sh && 
     chmod 755 gist.sh && 
     sudo mv gist.sh /usr/local/bin/ 
+</pre>
 
 
+h2. Usage
 * Posting to GitHub:
 
-  $ cat file | gist.sh 
-
+<pre>
+  $ cat file | gist.sh
+</pre>
 
 or
 
+<pre>
   $ gist.sh < file·
-
+</pre>
 
 * Getting from GitHub:
-
-  $ gist.sh 1234 
-
-
+<pre>
+  $ gist.sh 1234
+</pre>
