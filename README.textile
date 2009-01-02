@@ -8,6 +8,7 @@ h2. Installation
 
 
 h2. Usage
+
 * Posting to GitHub:
 
 <pre>
