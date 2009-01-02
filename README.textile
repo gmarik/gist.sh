@@ -1,14 +1,20 @@
 Usage:
 
+* Getting gist.sh:
+
+  $ curl http://github.com/gmarik/gist.sh/tree/master%2Fgist.sh?raw=true > gist.sh && 
+    chmod 755 gist.sh && 
+    sudo mv gist.sh /usr/local/bin/ 
+
 * Posting to GitHub:
 
-  $ cat file|gist.sh
+  $ cat file | gist.sh 
 
 or
 
-  $ gist.sh  < file·
+  $ gist.sh < file·
 
 
 * Getting from GitHub:
 
-  $ gist.sh 1234
+  $ gist.sh 1234 
