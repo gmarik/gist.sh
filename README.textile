@@ -22,10 +22,11 @@ h2. Usage
 or
 
 <pre>
-  $ gist.sh < file·
+  $ gist.sh < file
 </pre>
 
 * Getting from GitHub:
+
 <pre>
   $ gist.sh 1234
 </pre>
