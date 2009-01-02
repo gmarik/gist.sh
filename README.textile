@@ -2,13 +2,16 @@ Usage:
 
 * Getting gist.sh:
 
-  $ curl http://github.com/gmarik/gist.sh/tree/master%2Fgist.sh?raw=true > gist.sh && 
+
+  $ curl http://github.com/gmarik/gist.sh/raw/master/gist.sh > gist.sh && 
     chmod 755 gist.sh && 
     sudo mv gist.sh /usr/local/bin/ 
+
 
 * Posting to GitHub:
 
   $ cat file | gist.sh 
+
 
 or
 
@@ -18,3 +21,5 @@ or
 * Getting from GitHub:
 
   $ gist.sh 1234 
+
+
