@@ -1,6 +1,6 @@
 h2. About
 
-A simple bash script for getting/posting code snippets (gists) from/to http://gist.github.com
+@gist.sh@ is a simple bash script for getting/posting code snippets (gists) from/to http://gist.github.com
 
 h2. Installation 
 
