@@ -63,13 +63,14 @@ gist_post ()
        -i \
        --silent \
        --data-urlencode private=on  \
-       --data-urlencode 'file_name[gistfile1]=by gist.sh' \
+       --data-urlencode 'file_name[gistfile1]=' \
        --data-urlencode 'file_ext[gistfile1]=' \
        --data-urlencode "file_contents[gistfile1]@$REQUEST_FILE" \
        -o $RESPONSE_FILE
 
-  LOCATION=$(cat $RESPONSE_FILE|sed -ne '/Location/p'|cut -f2- -d:)
-  log "Gist location:$LOCATION"
+  LOCATION=$(cat $RESPONSE_FILE|sed -ne '/Location/p'|cut -f2- -d:|tr -d ' ')
+  log "* Gist location:"
+  echo "$LOCATION"
 }
 
 require curl
