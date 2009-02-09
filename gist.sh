@@ -51,9 +51,12 @@ gist_post ()
 
   # read file content
   #TODO: improve
+  OLDIFS="$IFS"
+  IFS=""
   while read line; do
     echo "$line" >> $REQUEST_FILE
   done
+  IFS="$OLDIFS"
 
   if [ ! -s $REQUEST_FILE ]; then
     help && exit 0
