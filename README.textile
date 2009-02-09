@@ -25,8 +25,28 @@ or
   $ gist.sh < file
 </pre>
 
+or
+
+<pre>
+  $ gist.sh -f file
+</pre>
+
+When posting from a file using -f, github will guess the language from the filename extension.
+
+When posting from standard input, you may pass -e to set an extension, from which github assigns the gist language:
+
+<pre>
+  $ gist.sh -e java < file
+</pre>
+
 * Getting from GitHub:
 
 <pre>
   $ gist.sh 1234
+</pre>
+
+or to write the gist to a file
+
+<pre>
+  $ gist.sh -f file 1234
 </pre>
