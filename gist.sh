@@ -18,38 +18,64 @@ require ()
 
 help () 
 {
-  log 'Usage: 
-* Posting to GitHub via standard input:
-  $ cat file|gist.sh
-  $ gist.sh < file
-or from a file:
-  $ gist.sh -f file
-or from the clipboard (xclip must be available):
-  $ gist.sh -c
+  log 'Usage:
 
-  * When reading from standard input or clipboard, the gist language can be set with -e:
-    $ gist.sh -e java < file
+  SYNOPSIS
 
-  * When reading from a file, github guesses the language based on the filename extension
+    Post gist:
 
-* Getting from GitHub:
-  $ gist.sh 1234
-or
-  $ gist.sh -f file 1234
-or
-  $ gist.sh -c 1234
+      gist.sh [-e <extension>] [-p] [-c] [-a] [-d]
+      gist.sh [-p] [-d] [-a] -f file
 
-* Cloning a gist from GitHub (if -p is also specified make a clone using the private clone URL -- this
-  requires the gist to have been created with authentication):
-  $ gist.sh -l 1234
+    Retrieve gist:
 
-* Debug mode: Specify -d to show the command that would be used to retrieve or post a gist to github.
+      gist.sh [-f <file> | -c] [-d] <gist-id>
 
-* Gists are public by default. Pass -p or --private to make a gist private.
+    Clone gist:
 
-* If your git config contains github.user and github.token (see https://github.com/account), they
-  will be used to assign yourself as owner of the posted gist. Use the -a or --anon parameter to
-  post anonymously.
+      gist.sh [-l] [-p] [-d] <gist-id>
+
+  DESCRIPTION
+
+    With -f, gist.sh reads/writes files.
+
+    With -c, gist.sh reads/writes to the clipboard (xclip is required).
+
+    With -l, gist.sh clones the gist to a local git repository.
+
+    Otherwise, gist.sh reads/writes standard input/output.
+
+    If your git config contains github.user and github.token (see
+    https://github.com/account), they will be used to assign yourself as owner
+    of posted gists. Use the -a or --anon parameter to post anonymously.
+
+  OPTIONS
+
+    -f, --file
+        Read/write a gist from/to the specified file. Github guesses the gist
+        language from the filename, therefore -e is ignored.
+
+    -c, --clip
+        Read/write a gist from/to the clipboard.
+
+    -l, --clone
+        Clone a gist.
+
+    -e, --ext
+        When reading standard input or clipboard, specify an extension. Github
+        sets the gist language based on the extension e.g. "java", "rb", "py".
+        Ignored if -f is specified.
+
+    -p, --private
+        Make a gist private. When cloning, use the private clone URL to clone
+        the gist. Requires the gist to be non-anonymous.
+
+    -a, --anon
+        Post a gist anonymously, even if Github authentication data is
+        available in the global git config.
+
+    -d, --debug
+        Debug mode. Nothing is actually read or written to Github.
 '
 }
 
