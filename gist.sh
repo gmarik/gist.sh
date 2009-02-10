@@ -35,6 +35,8 @@ or
   $ gist.sh 1234
 or
   $ gist.sh -f file 1234
+
+* Debug mode: Specify -d to show the command that would be used to retrieve or post a gist to github.
 '
 }
 
@@ -43,6 +45,11 @@ gist_get ()
   URL="https://gist.github.com/$1.txt"
   log "* reading Gist from $URL"
   CMD="curl -s $URL"
+
+  if [ "$_DEBUG" = "1" ]; then
+    echo $CMD
+    exit 0
+  fi
 
   if [ "$_FILENAME" = "" ]; then
     log "\n"
@@ -100,7 +107,11 @@ gist_post ()
   #cleanup
   : > $RESPONSE_FILE
 
-  curl http://gist.github.com/gists \
+  if [ "$_DEBUG" = "1" ]; then
+    DEBUG=echo
+  fi
+
+  $DEBUG curl http://gist.github.com/gists \
        -i \
        --silent \
        --data-urlencode private=on  \
@@ -121,6 +132,9 @@ while [ $# -gt 0 ]; do
   -h|--help)
       help
       exit 0
+  ;;
+  -d|--debug)
+      _DEBUG=1
   ;;
   -e|--ext)
       shift

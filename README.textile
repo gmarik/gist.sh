@@ -50,3 +50,5 @@ or to write the gist to a file
 <pre>
   $ gist.sh -f file 1234
 </pre>
+
+Use the -d (debug) parameter to show the curl command that would be executed to post or receive a gist rather than actually communicating with github.
