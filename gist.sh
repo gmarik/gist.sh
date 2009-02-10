@@ -40,6 +40,12 @@ or
   $ gist.sh -c 1234
 
 * Debug mode: Specify -d to show the command that would be used to retrieve or post a gist to github.
+
+* Gists are public by default. Pass -p or --private to make a gist private.
+
+* If your git config contains github.user and github.token (see https://github.com/account), they
+  will be used to assign yourself as owner of the posted gist. Use the -a or --anon parameter to
+  post anonymously.
 '
 }
 
@@ -126,10 +132,29 @@ gist_post ()
     DEBUG=echo
   fi
 
+  if [ "$_PRIVATE" = "1" ]; then
+    PRIVATE="--data-urlencode private=on"
+  else
+    PRIVATE=""
+  fi
+
+  if [ "$_ANON" != "1" ]; then
+    require git
+
+    USER=$(git config --global github.user)
+    USERAVAIL=$?
+    TOKEN=$(git config --global github.token)
+    TOKENAVAIL=$?
+    if [ $USERAVAIL -eq 0 -a $TOKENAVAIL -eq 0 ]; then
+      AUTH="--data-urlencode login=$USER --data-urlencode token=$TOKEN"
+    fi
+  fi
+
   $DEBUG curl http://gist.github.com/gists \
        -i \
        --silent \
-       --data-urlencode private=on  \
+       $PRIVATE \
+       $AUTH \
        --data-urlencode "file_name[gistfile1]=$FILENAME" \
        --data-urlencode "file_ext[gistfile1]=$FILEEXT" \
        --data-urlencode "file_contents[gistfile1]@$REQUEST_FILE" \
@@ -162,6 +187,12 @@ while [ $# -gt 0 ]; do
   -c|--clip)
       require xclip
       _CLIP=1
+  ;;
+  -p|--private)
+      _PRIVATE=1
+  ;;
+  -a|--anon)
+      _ANON=1
   ;;
   *[a-zA-Z0-9]) # gist ID
       gist_get $1

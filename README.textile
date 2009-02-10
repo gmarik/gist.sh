@@ -60,3 +60,7 @@ or to write the gist to the clipboard (xclip must be available)
 </pre>
 
 * Use the -d (debug) parameter to show the curl command that would be executed to post or receive a gist rather than actually communicating with github.
+
+* Gists are public by default. Pass -p or --private to make a gist private.
+
+* If your git config contains github.user and github.token (see https://github.com/account), they will be used to assign yourself as owner of the posted gist. Use the -a or --anon parameter to post anonymously.
