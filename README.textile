@@ -59,6 +59,18 @@ or to write the gist to the clipboard (xclip must be available)
   $ gist.sh -c 1234
 </pre>
 
+* Cloning a gist from GitHub:
+
+<pre>
+  $ gist.sh -l 1234
+</pre>
+
+or to clone using the private clone URL to support local update and push (this requires the gist to have been created with authentication):
+
+<pre>
+  $ gist.sh -p -l 1234
+</pre>
+
 * Use the -d (debug) parameter to show the curl command that would be executed to post or receive a gist rather than actually communicating with github.
 
 * Gists are public by default. Pass -p or --private to make a gist private.

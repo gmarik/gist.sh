@@ -39,6 +39,10 @@ or
 or
   $ gist.sh -c 1234
 
+* Cloning a gist from GitHub (if -p is also specified make a clone using the private clone URL -- this
+  requires the gist to have been created with authentication):
+  $ gist.sh -l 1234
+
 * Debug mode: Specify -d to show the command that would be used to retrieve or post a gist to github.
 
 * Gists are public by default. Pass -p or --private to make a gist private.
@@ -75,6 +79,26 @@ gist_get ()
     log "\n"
     echo "$($CMD)"
   fi
+}
+
+gist_clone ()
+{
+  if [ "$_PRIVATE" = "1" ]; then
+    URL="git@gist.github.com:$1.git"
+  else
+    URL="git://gist.github.com/$1.git"
+  fi
+
+  log "* cloning Gist from $URL"
+
+  CMD="git clone $URL gist-$1"
+
+  if [ "$_DEBUG" = "1" ]; then
+    echo $CMD
+    exit 0
+  fi
+
+  $CMD
 }
 
 gist_post ()
@@ -194,8 +218,16 @@ while [ $# -gt 0 ]; do
   -a|--anon)
       _ANON=1
   ;;
+  -l|--clone)
+      require git
+      _CLONE=1
+  ;;
   *[a-zA-Z0-9]) # gist ID
-      gist_get $1
+      if [ "$_CLONE" = "1" ]; then
+        gist_clone $1
+      else
+        gist_get $1
+      fi
       exit 0
   ;;
   esac
