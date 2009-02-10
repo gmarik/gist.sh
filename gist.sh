@@ -19,14 +19,15 @@ require ()
 help () 
 {
   log 'Usage: 
-* Posting to GitHub:
+* Posting to GitHub via standard input:
   $ cat file|gist.sh
-or
   $ gist.sh < file
-or
+or from a file:
   $ gist.sh -f file
+or from the clipboard (xclip must be available):
+  $ gist.sh -c
 
-  * When reading from standard input, the gist language can be set with -e:
+  * When reading from standard input or clipboard, the gist language can be set with -e:
     $ gist.sh -e java < file
 
   * When reading from a file, github guesses the language based on the filename extension
@@ -35,15 +36,18 @@ or
   $ gist.sh 1234
 or
   $ gist.sh -f file 1234
+or
+  $ gist.sh -c 1234
 
 * Debug mode: Specify -d to show the command that would be used to retrieve or post a gist to github.
 '
 }
 
-gist_get () 
+gist_get ()
 {
   URL="https://gist.github.com/$1.txt"
   log "* reading Gist from $URL"
+
   CMD="curl -s $URL"
 
   if [ "$_DEBUG" = "1" ]; then
@@ -51,23 +55,46 @@ gist_get ()
     exit 0
   fi
 
-  if [ "$_FILENAME" = "" ]; then
-    log "\n"
-    echo "$($CMD)"
-  else
+  if [ "$_FILENAME" != "" ]; then
     if [ -f "$_FILENAME" ]; then
       log "* Filename $_FILENAME already exists, aborting."
       exit 1
     fi
     $CMD > $_FILENAME
     log "* Gist written to file $_FILENAME"
+  elif [ "$_CLIP" = "1" ]; then
+    $CMD | xclip -i -selection clipboard
+    log "* Gist written to clipboard"
+  else
+    log "\n"
+    echo "$($CMD)"
   fi
 }
 
 gist_post ()
 {
-  if [ "$_FILENAME" = "" ]; then
-    log "* readin Gist from stdin"
+  if [ "$_FILENAME" != "" ]; then
+    log "* reading Gist from $_FILENAME"
+
+    REQUEST_FILE="$_FILENAME"
+
+    FILENAME=$(basename "$_FILENAME")
+
+    if [ "$_FILEEXT" != "" ]; then
+      log "* warning: -e specified with -f, ignoring -e"
+    fi
+
+    FILEEXT=""
+  elif [ "$_CLIP" = "1" ]; then
+    log "* reading Gist from clipboard"
+    REQUEST_FILE=/tmp/gist.sh.req
+
+    xclip -o -selection clipboard > $REQUEST_FILE
+
+    FILENAME=""
+    FILEEXT=".$_FILEEXT"
+  else
+    log "* reading Gist from stdin"
     REQUEST_FILE=/tmp/gist.sh.req
 
     #cleanup
@@ -84,18 +111,6 @@ gist_post ()
 
     FILENAME=""
     FILEEXT=".$_FILEEXT"
-  else
-    log "* readin Gist from $_FILENAME"
-
-    REQUEST_FILE="$_FILENAME"
-
-    FILENAME=$(basename "$_FILENAME")
-
-    if [ "$_FILEEXT" != "" ]; then
-      log "* warning: -e specified with -f, ignoring -e"
-    fi
-
-    FILEEXT=""
   fi
 
   if [ ! -s $REQUEST_FILE ]; then
@@ -143,6 +158,10 @@ while [ $# -gt 0 ]; do
   -f|--file)
       shift
       _FILENAME="$1"
+  ;;
+  -c|--clip)
+      require xclip
+      _CLIP=1
   ;;
   *[a-zA-Z0-9]) # gist ID
       gist_get $1
