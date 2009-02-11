@@ -80,4 +80,5 @@ or to clone using the private clone URL to support local update and push (this r
 h2. Contributors
 
 1. http://github.com/gmarik
+
 2. http://github.com/rocketraman
