@@ -76,3 +76,7 @@ or to clone using the private clone URL to support local update and push (this r
 * Gists are public by default. Pass -p or --private to make a gist private.
 
 * If your git config contains github.user and github.token (see https://github.com/account), they will be used to assign yourself as owner of the posted gist. Use the -a or --anon parameter to post anonymously.
+
+h2. Contributors
+1. http://github.com/gmarik
+2. http://github.com/rocketraman
