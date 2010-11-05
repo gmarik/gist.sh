@@ -200,7 +200,7 @@ gist_post ()
     fi
   fi
 
-  $DEBUG curl http://gist.github.com/gists \
+  $DEBUG curl https://gist.github.com/gists \
        -i \
        --silent \
        $PRIVATE \
