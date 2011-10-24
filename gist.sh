@@ -183,9 +183,9 @@ gist_post ()
   fi
 
   if [ "$_PRIVATE" = "1" ]; then
-    PRIVATE="--data-urlencode private=on"
+    PRIVATE="--data-urlencode public=false"
   else
-    PRIVATE=""
+    PRIVATE="--data-urlencode public=true"
   fi
 
   if [ "$_ANON" != "1" ]; then
