@@ -191,11 +191,19 @@ gist_post ()
   if [ "$_ANON" != "1" ]; then
     require git
 
-    USER=`head -n1 ~/.githubconfig`
-    USERAVAIL=$?
-    TOKEN=`tail -n1 ~/.githubconfig`
-    TOKENAVAIL=$?
-    if [ $USERAVAIL -eq 0 -a $TOKENAVAIL -eq 0 ]; then
+    CFG_FILE="$HOME/.githubconfig"
+    if [ -n "$GITHUB_USER" -a -n "$GITHUB_TOKEN" ]; then
+      USER="$GITHUB_USER"
+      TOKEN="$GITHUB_TOKEN"
+    elif [ -f "$cfg_file" ]; then
+      USER=$(head -n1 "$cfg_file")
+      TOKEN=$(tail -n1 "$cfg_file")
+    else
+      USER=$(git config --global github.user)
+      TOKEN=$(git config --global github.token)
+    fi
+
+    if [ -n "$USER" -a -n "$TOKEN" ]; then
       AUTH="--data-urlencode login=$USER --data-urlencode token=$TOKEN"
     fi
   fi
