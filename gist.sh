@@ -191,9 +191,9 @@ gist_post ()
   if [ "$_ANON" != "1" ]; then
     require git
 
-    USER=$(git config --global github.user)
+    USER=`head -n1 ~/.githubconfig`
     USERAVAIL=$?
-    TOKEN=$(git config --global github.token)
+    TOKEN=`tail -n1 ~/.githubconfig`
     TOKENAVAIL=$?
     if [ $USERAVAIL -eq 0 -a $TOKENAVAIL -eq 0 ]; then
       AUTH="--data-urlencode login=$USER --data-urlencode token=$TOKEN"
