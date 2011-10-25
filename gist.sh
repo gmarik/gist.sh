@@ -195,9 +195,9 @@ gist_post ()
     if [ -n "$GITHUB_USER" -a -n "$GITHUB_TOKEN" ]; then
       USER="$GITHUB_USER"
       TOKEN="$GITHUB_TOKEN"
-    elif [ -f "$cfg_file" ]; then
-      USER=$(head -n1 "$cfg_file")
-      TOKEN=$(tail -n1 "$cfg_file")
+    elif [ -f "$CFG_FILE" ]; then
+      USER=$(head -n1 "$CFG_FILE")
+      TOKEN=$(tail -n1 "$CFG_FILE")
     else
       USER=$(git config --global github.user)
       TOKEN=$(git config --global github.token)
