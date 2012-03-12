@@ -82,3 +82,5 @@ h2. Contributors
 1. http://github.com/gmarik
 
 2. http://github.com/rocketraman
+
+3. http://github.com/markcaudill
