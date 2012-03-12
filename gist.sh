@@ -81,7 +81,7 @@ help ()
 
 gist_get ()
 {
-  URL="https://gist.github.com/$1.txt"
+  URL="https://raw.github.com/gist/$1"
   log "* reading Gist from $URL"
 
   CMD="curl -s $URL"
