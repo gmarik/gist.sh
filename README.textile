@@ -1,3 +1,7 @@
+h1. Unmaintained, doesn't work.
+
+Since Github API changes. Thanks for stopping by!
+
 h2. About
 
 @gist.sh@ is a simple bash shell script for getting/posting code snippets (gists) from/to http://gist.github.com
